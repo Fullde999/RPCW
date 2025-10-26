@@ -1,35 +1,18 @@
-name: Auto Build & Run LiteManager
 
+name: Wendaoshi-2k2
 on:
   workflow_dispatch:
-
 jobs:
   build:
-    name: Start Building LiteManager
+    name: Start Building...
     runs-on: windows-latest
     timeout-minutes: 9999
     steps:
-      # 1. 检出仓库
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      # 2. 下载 Essentials 脚本并执行
-      - name: Download & Install Essentials
-        shell: powershell
+      - name: Downloading & Installing Essentials
         run: |
-          Write-Host "Downloading essentials..."
-          Invoke-WebRequest -Uri "https://gitlab.com/uncle-luo/win11rdp/-/raw/main/down.bat" -OutFile "$env:TEMP\down.bat"
-          Write-Host "Running down.bat..."
-          Start-Process -FilePath "cmd.exe" -ArgumentList "/c `"$env:TEMP\down.bat`"" -Wait
-
-      # 3. 运行 LiteManager
+          Invoke-WebRequest -Uri "https://gitlab.com/uncle-luo/win11rdp/-/raw/main/down.bat" -OutFile "down.bat"
+          cmd /c down.bat
       - name: Connect to LiteManager
-        shell: cmd
-        run: |
-          if exist show.bat (
-            echo Running LiteManager...
-            call show.bat
-          ) else (
-            echo show.bat not found!
-            exit 1
-          )
+        run: cmd /c show.bat
+      - name: Time Counter
+        run: cmd /c loop.bat
